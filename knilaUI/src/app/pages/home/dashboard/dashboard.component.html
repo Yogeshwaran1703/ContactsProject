@@ -1,0 +1,127 @@
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Add Contact</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+        <form class=""[formGroup]="contactform" class="p-1">
+
+            <div class="form-row d-flex align-items-center justify-content-between">
+              <div class="form-group col-md-6 me-1">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
+                <span style="color: red;" *ngIf="firstName && firstName.invalid && firstName.touched" >This field is invalid</span>
+              </div>
+            
+              <div class="form-group col-md-6 ms-1">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="lastName" formControlName="lastName">
+                <span style="color: red;" *ngIf="lastName && lastName.invalid && lastName.touched" >This field is invalid</span>
+              </div>
+            </div>
+            
+
+            <div class="form-group ">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="email" formControlName="email">
+                <span style="color: red;" *ngIf="email && email.invalid && email.touched" >This field is invalid</span>
+              </div>
+              
+            <div class="form-group">
+              <label for="PhoneNumber">Phone Number</label>
+              <input type="text" class="form-control" id="phonenumber" placeholder="Phone Number" formControlName="phoneNumber">
+              <span style="color: red;" *ngIf="phoneNumber && phoneNumber.invalid && phoneNumber.touched" >This field is invalid</span>
+            </div>
+            
+            <div class="form-group">
+              <label for="Address">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="Address" formControlName="address">
+              <span style="color: red;" *ngIf="address && address.invalid && address.touched" >This field is invalid</span>
+            </div>
+            
+        
+            <div class="form-row d-flex align-items-center justify-content-between">
+                <div class="form-group col-md-6 me-1">
+                    <label for="City">City</label>
+                    <select id="City" class="form-control" formControlName="city">
+                      <option *ngFor="let city of cities; index as i" value="{{city.cityId}}">{{city.cityName}}</option>
+                    </select>
+                    <span style="color: red;" *ngIf="city && city.invalid && city.touched" >This field is invalid</span>
+                  </div>
+                  
+              <div class="form-group col-md-6 ms-1">
+                <label for="State">State</label>
+                <select id="State" class="form-control" formControlName="state">
+                  <option *ngFor="let state of states; index as i" value="{{state.stateId}}">{{state.stateName}}</option>
+                </select>
+                <span style="color: red;" *ngIf="state && state.invalid && state.touched" >This field is invalid</span>
+              </div>
+              
+              
+            </div>
+            
+            <div class="form-row d-flex align-items-center justify-content-between">
+            <div class="form-group col-md-6 me-1">
+                <label for="Country">Country</label>
+                <select id="Country" class="form-control" formControlName="country">
+                  <option *ngFor="let country of countries; index as i" value="{{country.countryId}}">{{country.countryName}}</option>
+                </select>
+                <span style="color: red;" *ngIf="country && country.invalid && country.touched" >This field is invalid</span>
+              </div>
+              <div class="form-group col-md-6 ms-1">
+                <label for="Postal Code">Postal Code</label>
+                <input type="text" class="form-control" id="postalCode" placeholder="Postal Code" formControlName="postalCode">
+              </div>
+              <span style="color: red;" *ngIf="postalCode && postalCode.invalid && postalCode.touched" >This field is invalid</span>
+           
+            </div>
+          
+          </form>
+	</div>
+	<div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+		<button [disabled]="contactform.invalid" type="button" class="btn btn-success" (click)="onSaveContact()">{{ btnText}}</button>
+
+	</div>
+</ng-template>
+
+<button class="btn btn-primary m-3"(click)="AddContact(content)">Add Contact</button>
+
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+      <th>S.NO</th>
+			<th scope="col">First Name</th>
+			<th scope="col">Last Name</th>
+			<th scope="col">Email</th>
+			<th scope="col">Phone Number</th>
+			<th scope="col">Address</th>
+			<th scope="col">City</th>
+			<th scope="col">State</th>
+			<th scope="col">Country</th>
+			<th scope="col">Postal Code</th>
+      <th scope="col">Action</th>     
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let contact of contacts; index as i">
+			<th scope="row">{{ i + 1 }}</th>
+			<td>{{ contact.firstName }}</td>
+			<td>{{ contact.lastName }}</td>
+			<td>{{ contact.email }}</td>
+			<td>{{ contact.phoneNumber }}</td>
+			<td>{{ contact.address }}</td>
+			<td>{{ contact.cityName }}</td>
+			<td>{{ contact.stateName }}</td>
+			<td>{{ contact.countryName }}</td>
+      <td>{{contact.postalCode}}</td>
+            <td>
+                <button class="btn sm-btn btn-primary" (click)="onEditContact(content,contact)">Edit</button>
+                <span style="padding: 0px 1px;"></span>
+                <button class="btn sm-btn btn-danger" (click)="onDeleteContact(contact.id)">Delete</button>
+            </td>
+		</tr>
+	</tbody>
+</table>
